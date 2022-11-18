@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import morgan from 'morgan';
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -10,6 +11,8 @@ const __dirname = path.dirname(__filename);
 app.listen(5000, () => {
   console.log('Express server is listening at  http://127.0.0.1:5000 ');
 });
+
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
   res.sendFile('views/home.html', { root: __dirname });
