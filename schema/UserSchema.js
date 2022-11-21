@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import isEmail from 'validator/lib/isEmail.js';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -16,6 +17,12 @@ const userSchema = new mongoose.Schema({
       'Entered Password is shorter than the minimum allowed length (8).',
     ],
   },
+});
+
+userSchema.pre('save', async function (next) {
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
 export const User = mongoose.model('user', userSchema);
