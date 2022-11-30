@@ -33,11 +33,11 @@ export const signup = (req, res) => {
 
 const sendOtp = async (number, otp) => {
   const accountSid = 'AC728572ab983ade9842e559f69ce8242a'; // Your Account SID from www.twilio.com/console
-  const authToken = '33fa64ad8393ecb2a7582f8c0c545a65'; // Your Auth Token from www.twilio.com/console
+  const authToken = '4fb9924466312f38e8a64f2a2c7b1d35'; // Your Auth Token from www.twilio.com/console
   const client = twilio(accountSid, authToken);
 
   return client.messages.create({
-    body: 'Hello from Zomato Clone, PLease use this OTP: ' + otp + ' to login.',
+    body: 'Hello from Zomato Clone, Please use this OTP: ' + otp + ' to login.',
     to: '+91' + number, // Text this number
     from: '+16402214281', // From a valid Twilio number
   });
@@ -45,6 +45,7 @@ const sendOtp = async (number, otp) => {
 
 export const otp = async (req, res) => {
   const { number } = req.body;
+  console.log(req.body);
   const otp = Math.floor(1000 + Math.random() * 9000);
   sendOtp(number, otp)
     .then((success) => {
